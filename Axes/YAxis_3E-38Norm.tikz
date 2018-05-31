@@ -1,0 +1,4 @@
+\draw [anchor= east] (3.35,2.34848) node[scale=2.46774, color=c, rotate=0]{0};
+\draw [anchor= east] (3.35,7.6404) node[scale=2.46774, color=c, rotate=0]{1};
+\draw [anchor= east] (3.35,12.9323) node[scale=2.46774, color=c, rotate=0]{2};
+\draw [anchor= east] (3.35,18.2242) node[scale=2.46774, color=c, rotate=0]{3};

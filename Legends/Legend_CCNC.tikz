@@ -1,0 +1,25 @@
+% CC-Total
+\def\cctYanchor{16.3}
+\draw [anchor=base west] (\legleftTextX,\cctYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{CC-Total};
+\draw [CCTotalLineStyle]  ($ (\legleftX,\cctYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
+
+%CC-RES
+\def\ccsppYanchor{15.3}
+\draw [anchor=base west] (\legleftTextX,\ccsppYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{CC-RES};
+\draw [CCRESLineStyle] ($ (\legleftX,\ccsppYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
+
+%CCQEL
+\def\ccqeYanchor{14.3}
+\draw [anchor=base west] (\legleftTextX,\ccqeYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{CC-1p1h+2p2h};
+\draw [CCQELLineStyle] ($ (\legleftX,\ccqeYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
+
+% NC-Total
+\def\cctYanchor{13.3}
+\draw [anchor=base west] (\legleftTextX,\cctYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{NC-Total};
+\draw [NCTotalLineStyle]  ($ (\legleftX,\cctYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
+
+
+%NC-RES
+\def\ccsppYanchor{13.3}
+\draw [anchor=base west] (\legrightTextX,\ccsppYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{NC-RES};
+\draw [NCRESLineStyle] ($ (\legrightX,\ccsppYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);

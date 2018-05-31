@@ -10,6 +10,12 @@
 % User Configuration
 %%%%%%%%%%%%%%%%%%%%
 
+% If true, separate based on generator interaction modes, otherwise separate by pion multiplicity
+\newtoggle{XSecIsTrueMode}
+
+% If false and XSecIsTrueMode is false, separate one pi channel into one charged and one neutral pion
+\newtoggle{OnePiCombined}
+
 % If true, show only CC Xsec
 \newtoggle{XSecIsJustCC}
 
@@ -17,7 +23,13 @@
 \newtoggle{XSecIsCCNC}
 
 % If true show ND280 and 2017 long paper oscillated SK flux, if false, show a range of experimental fluxes
-\newtoggle{FluxIsT2KSKOsc}
+\newtoggle{FluxIsT2KOnly}
+
+% If FluxIsT2KOnly is true, and this is false show WSB fluxes of the same species
+\newtoggle{IsT2KOsc}
+
+% If IsT2KOsc is false, this scales up the WSB by a factor of ten
+\newtoggle{WSBxTen}
 
 % If false show fluxes and xsecs as numu
 \newtoggle{IsAntiNumu}
@@ -35,29 +47,151 @@
 
 % Colors and line styles
 %%%%%%%%%%%%%%%%%%%%%%%%
+\def\FluxOverlayLineWidth{2}
 
 %Fluxes are filled
-\definecolor{ND280Flux}{rgb}{0.431373,0,0.372549}
-\definecolor{SKFlux}{rgb}{0.580392,0.682353,0.290196}
+\iftoggle{FluxIsT2KOnly}{%
+  \definecolor{ND280FluxColor}{rgb}{0.431373,0,0.372549}
+  \definecolor{SKFluxColor}{rgb}{0.580392,0.682353,0.290196}
+  \iftoggle{IsT2KOsc}{%
+    \definecolor{SKFluxColor}{rgb}{0.580392,0.682353,0.290196}
+  }{
+    \definecolor{ND280WSBFluxColor}{rgb}{0.580392,0.682353,0.290196}
+  }
+}{%
+  \definecolor{ND280FluxColor}{rgb}{0.431373,0,0.372549}
+  \definecolor{DUNEFluxColor}{rgb}{0.580392,0.682353,0.290196}
+  \definecolor{NOvAFluxColor}{rgb}{0.0941176,0.270588,0.231373}
+  \definecolor{MINERvAFluxColor}{rgb}{0.941176,0.521569,0.129412}
+}
+
+\def\deflinewidth{1.8}
+
+\tikzset{ROOTLINESTYLE1/.style={line width=\deflinewidth}}
+\tikzset{ROOTLINESTYLE2/.style={dashed,line width=\deflinewidth}}
+\tikzset{ROOTLINESTYLE3/.style={dotted,line width=\deflinewidth}}
+\tikzset{ROOTLINESTYLE4/.style={dash pattern=on 4pt off 2.4pt on 0.8pt off 2.4pt on 0.8pt off 2.4pt on 0.8pt off 2.4pt,line width=\deflinewidth}}
+\tikzset{ROOTLINESTYLE5/.style={dash pattern=on 4pt off 2.4pt on 0.8pt off 2.4pt,line width=\deflinewidth}}
+
 
 \definecolor{LegendTextColor}{rgb}{0,0,0}
 
-% XSec components
-\definecolor{CCTotalColor}{rgb}{0,0,0}
-\tikzset{CCTotalLineStyle/.style={CCTotalColor,line width=1.8}}
-\definecolor{CCDISColor}{rgb}{0,0,0}
-\tikzset{CCDISLineStyle/.style={CCDISColor,dashed,line width=1.8}}
-\iftoggle{QELCombined}{ %
-\definecolor{CCQELColor}{rgb}{0,0,0}
-\tikzset{CCQELLineStyle/.style={CCQELColor,dash pattern=on 4pt off 2.4pt on 0.8pt off 2.4pt,line width=1.8}}
-}{ %
-\definecolor{CCopohColor}{rgb}{0,0,0}
-\tikzset{CCopohLineStyle/.style={CCopohColor,dash pattern=on 4pt off 2.4pt on 0.8pt off 2.4pt,line width=1.8}}
-\definecolor{CCtpthColor}{rgb}{0,0,0}
-\tikzset{CCtpthLineStyle/.style={CCtpthColor,dash pattern=on 4pt off 2.4pt on 0.8pt off 2.4pt on 0.8pt off 2.4pt on 0.8pt off 2.4pt,line width=1.8}}
+\iftoggle{XSecIsCCNC}{
+
+  \definecolor{CCTotalColor}{rgb}{0,0,0}
+  \tikzset{CCTotalLineStyle/.style={CCTotalColor,ROOTLINESTYLE1}}
+
+  \definecolor{NCTotalColor}{rgb}{0,0,0}
+  \tikzset{NCTotalLineStyle/.style={NCTotalColor,ROOTLINESTYLE4}}
+
+  \iftoggle{XSecIsTrueMode}{ %
+    \definecolor{CCRESColor}{rgb}{0,0,0}
+    \tikzset{CCRESLineStyle/.style={CCRESColor,ROOTLINESTYLE2}}
+
+    \definecolor{CCQELColor}{rgb}{0,0,0}
+    \tikzset{CCQELLineStyle/.style={CCQELColor,ROOTLINESTYLE3}}
+
+    \definecolor{NCRESColor}{rgb}{0,0,0}
+    \tikzset{NCRESLineStyle/.style={NCRESColor,ROOTLINESTYLE5}}
+  }{ %pion multiplicity topology
+    \definecolor{CCOnePiColor}{rgb}{0,0,0}
+    \tikzset{CCOnePiLineStyle/.style={CCRESColor,ROOTLINESTYLE2}}
+
+    \definecolor{CCZeroPiColor}{rgb}{0,0,0}
+    \tikzset{CCZeroPiLineStyle/.style={CCQELColor,ROOTLINESTYLE3}}
+
+    \definecolor{NCOnePiColor}{rgb}{0,0,0}
+    \tikzset{NCOnePiLineStyle/.style={NCRESColor,ROOTLINESTYLE5}}
+  }
+
+}{
+  % XSec components
+  % CC
+  \definecolor{CCTotalColor}{rgb}{0,0,0}
+  \tikzset{CCTotalLineStyle/.style={CCTotalColor,ROOTLINESTYLE1}}
+
+  \definecolor{NCTotalColor}{rgb}{0,0,0}
+  \tikzset{NCTotalLineStyle/.style={NCTotalColor,ROOTLINESTYLE1}}
+
+  \iftoggle{XSecIsTrueMode}{ %
+
+    \definecolor{CCDISColor}{rgb}{0,0,0}
+    \tikzset{CCDISLineStyle/.style={CCDISColor,ROOTLINESTYLE2}}
+
+    \definecolor{CCRESColor}{rgb}{0,0,0}
+    \tikzset{CCRESLineStyle/.style={CCRESColor,ROOTLINESTYLE3}}
+
+    \iftoggle{QELCombined}{ %
+
+      \definecolor{CCQELColor}{rgb}{0,0,0}
+      \tikzset{CCQELLineStyle/.style={CCQELColor,ROOTLINESTYLE4}}
+
+    }{ %
+
+      \definecolor{CCopohColor}{rgb}{0,0,0}
+      \tikzset{CCopohLineStyle/.style={CCopohColor,ROOTLINESTYLE4}}
+
+      \definecolor{CCtpthColor}{rgb}{0,0,0}
+      \tikzset{CCtpthLineStyle/.style={CCtpthColor,ROOTLINESTYLE5}}
+
+    }
+
+    % NC
+    \definecolor{NCDISColor}{rgb}{0,0,0}
+    \tikzset{NCDISLineStyle/.style={NCDISColor,ROOTLINESTYLE2}}
+
+    \definecolor{NCRESColor}{rgb}{0,0,0}
+    \tikzset{NCRESLineStyle/.style={NCRESColor,ROOTLINESTYLE3}}
+
+    \iftoggle{QELCombined}{ %
+
+      \definecolor{NCELColor}{rgb}{0,0,0}
+      \tikzset{NCELLineStyle/.style={NCELColor,ROOTLINESTYLE4}}
+
+    }{ %
+
+      \definecolor{NCopohColor}{rgb}{0,0,0}
+      \tikzset{NCopohLineStyle/.style={NCopohColor,ROOTLINESTYLE4}}
+
+      \definecolor{NCtpthColor}{rgb}{0,0,0}
+      \tikzset{NCtpthLineStyle/.style={NCtpthColor,ROOTLINESTYLE5}}
+
+    }
+  }{ % pion multiplicity topology
+    %CC
+    \definecolor{CCZeroPiColor}{rgb}{0,0,0}
+    \tikzset{CCZeroPiLineStyle/.style={CCZeroPiColor,ROOTLINESTYLE5}}
+
+    \iftoggle{OnePiCombined}{
+      \definecolor{CCOnePiColor}{rgb}{0,0,0}
+      \tikzset{CCOnePiLineStyle/.style={CCOnePiColor,ROOTLINESTYLE3}}
+    }{
+      \definecolor{CCOnePiZeroColor}{rgb}{0,0,0}
+      \tikzset{CCOnePiZeroLineStyle/.style={CCOnePiZeroColor,ROOTLINESTYLE3}}
+      \definecolor{CCOneCPiColor}{rgb}{0,0,0}
+      \tikzset{CCOneCPiLineStyle/.style={CCOneCPiColor,ROOTLINESTYLE4}}
+    }
+    \definecolor{CCNPiColor}{rgb}{0,0,0}
+    \tikzset{CCNPiLineStyle/.style={CCNPiColor,ROOTLINESTYLE2}}
+
+
+    %CC
+    \definecolor{NCZeroPiColor}{rgb}{0,0,0}
+    \tikzset{NCZeroPiLineStyle/.style={NCZeroPiColor,ROOTLINESTYLE5}}
+
+    \iftoggle{OnePiCombined}{
+      \definecolor{NCOnePiColor}{rgb}{0,0,0}
+      \tikzset{NCOnePiLineStyle/.style={NCOnePiColor,ROOTLINESTYLE3}}
+    }{
+      \definecolor{NCOnePiZeroColor}{rgb}{0,0,0}
+      \tikzset{NCOnePiZeroLineStyle/.style={NCOnePiZeroColor,ROOTLINESTYLE3}}
+      \definecolor{NCOneCPiColor}{rgb}{0,0,0}
+      \tikzset{NCOneCPiLineStyle/.style={NCOneCPiColor,ROOTLINESTYL43}}
+    }
+    \definecolor{NCNPiColor}{rgb}{0,0,0}
+    \tikzset{NCNPiLineStyle/.style={NCNPiColor,ROOTLINESTYLE2}}
+  }
 }
-\definecolor{CCRESColor}{rgb}{0,0,0}
-\tikzset{CCRESLineStyle/.style={CCRESColor,dotted,line width=1.8}}
 
 % Legend titles
 \def\legstylewidth{1.225}
@@ -72,58 +206,39 @@
 \def\legrightTitleX{11.5}
 \def\legrightTextX{13.25}
 
-\def\legtextscale{1.6}
+\def\legtextscale{1.575}
 
 %Legend title
-% \def\legendYanchor{16.7917}
-\def\legendYanchor{17.1}
-\draw [anchor=base west] (\legrightTitleX,\legendYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{$\nu_{\mu}\textrm{ Flux (arbitrary norm.)}$};
-\draw [anchor=base west] (\legleftTitleX,\legendYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{$\texttt{NEUT 5.3.6,}\ \sigma_{\nu_{\mu}\textsc{ch}}\left(E_{\nu}\right)$};
+\iftoggle{IsAntiNumu}{%
+  \newcommand{\nulatex}{\bar{\nu}_{\mu}}
+  \newcommand{\beammode}{RHC}
+}{
+  \newcommand{\nulatex}{\nu_{\mu}}
+  \newcommand{\beammode}{FHC}
+}
+\def\legendYanchor{17.2}
+\draw [anchor=base west] (\legrightTitleX,\legendYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{$\textrm{\beammode\,}\nulatex\textrm{ Flux (arbitrary norm.)}$};
+\iftoggle{IsNEUT}{%
+  \iftoggle{IsNEUTFF}{%
+    \draw [anchor=base west] (\legleftTitleX,\legendYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{$\texttt{NEUT 5.4.0,}\ \sigma_{\nulatex\textsc{ch}}\left(E_{\nu}\right)$};
+  }{% Is just NC
+  \draw [anchor=base west] (\legleftTitleX,\legendYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{$\texttt{NEUT 5.3.6,}\ \sigma_{\nulatex\textsc{ch}}\left(E_{\nu}\right)$};
+  }
+}{% Is GENIE
+  \draw [anchor=base west] (\legleftTitleX,\legendYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{$\texttt{GENIE 2.12.8,}\ \sigma_{\nulatex\textsc{ch}}\left(E_{\nu}\right)$};
+}
 
-% CC-Total
-\def\cctYanchor{16.1}
-\draw [anchor=base west] (\legleftTextX,\cctYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{CC-Total};
-\draw [CCTotalLineStyle]  ($ (\legleftX,\cctYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
+\iftoggle{XSecIsJustCC}{%
+  \input{Legends/Legend_CCOnly.tikz}
+}{% Is NC or CC+NC
+  \iftoggle{XSecIsCCNC}{%
+    \input{Legends/Legend_CCNC.tikz}
+  }{% Is just NC
+    \input{Legends/Legend_NCOnly.tikz}
+  }
+}
 
-%CC-DIS
-\def\ccDISYanchor{15.1}
-\draw [anchor=base west] (\legleftTextX,\ccDISYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{CC-DIS};
-\draw [CCDISLineStyle] ($ (\legleftX,\ccDISYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
-
-
-%CC-RES
-\def\ccsppYanchor{14.1}
-\draw [anchor=base west] (\legleftTextX,\ccsppYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{CC-RES};
-\draw [CCRESLineStyle] ($ (\legleftX,\ccsppYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
-
-\iftoggle{QELCombined}{ %
-%CCQEL
-\def\ccqeYanchor{13.1}
-\draw [anchor=base west] (\legleftTextX,\ccqeYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{CC-1p1h+2p2h};
-\draw [CCQELLineStyle] ($ (\legleftX,\ccqeYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
-}{ % if not QELCombined
-%CC1p1h
-\def\ccqeYanchor{13.1}
-\draw [anchor=base west] (\legleftTextX,\ccqeYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{CC-1p1h};
-\draw [CCopohLineStyle] ($ (\legleftX,\ccqeYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
-
-%CC2p2h
-\def\ccqeYanchor{13.1}
-\draw [anchor=base west] (\legrightTextX,\ccqeYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{CC-2p2h (Nieves)};
-\draw [CCtpthLineStyle] ($ (\legrightX,\ccqeYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
-} %end \iftoggle{QELCombined}
-
-% ND280
-\def\ndteYanchor{\cctYanchor}
-\draw [anchor=base west] (\legrightTextX,\ndteYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{$\textrm{T2K: ND off-axis}$};
-\draw [ND280Flux,fill=ND280Flux] ($ (\legrightX,\ndteYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
-\draw [ND280Flux,line width=0] ($ (\legrightX,\ndteYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
-
-%%SK
-\def\SKYanchor{14.6}
-\draw [anchor=base west] (\legrightTextX,\SKYanchor+0.25) node[scale=\legtextscale, color=LegendTextColor, rotate=0, text width=10em]{[1707.01048] B.F. Super-K oscillated};
-\draw [SKFlux,fill=SKFlux] ($ (\legrightX,\SKYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
-\draw [SKFlux,line width=0] ($ (\legrightX,\SKYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+\input{Legends/Legend_Flux.tikz}
 
 \pgfdeclareplotmark{cross} {
 \pgfpathmoveto{\pgfpoint{-0.3\pgfplotmarksize}{\pgfplotmarksize}}
@@ -265,10 +380,29 @@
 \draw [c,line width=0.9] (3.62675,16.1075) -- (3.5,16.1075);
 \draw [c,line width=0.9] (3.62675,17.1659) -- (3.5,17.1659);
 \draw [c,line width=0.9] (3.7535,18.2242) -- (3.5,18.2242);
-\draw [anchor= east] (3.35,2.34848) node[scale=2.46774, color=c, rotate=0]{0};
-\draw [anchor= east] (3.35,7.6404) node[scale=2.46774, color=c, rotate=0]{1};
-\draw [anchor= east] (3.35,12.9323) node[scale=2.46774, color=c, rotate=0]{2};
-\draw [anchor= east] (3.35,18.2242) node[scale=2.46774, color=c, rotate=0]{3};
+
+\iftoggle{IsAntiNumu}{
+  \iftoggle{XSecIsJustCC}{%
+    \input{Axes/YAxis_1.5E-38Norm.tikz}
+  }{% Is NC or CC+NC
+    \iftoggle{XSecIsCCNC}{%
+      \input{Axes/YAxis_1.5E-38Norm.tikz}
+    }{% Is just NC
+      \input{Axes/YAxis_1.5E-38Norm.tikz}
+    }
+  }
+}{
+  \iftoggle{XSecIsJustCC}{%
+    \input{Axes/YAxis_3E-38Norm.tikz}
+  }{% Is NC or CC+NC
+    \iftoggle{XSecIsCCNC}{%
+      \input{Axes/YAxis_3E-38Norm.tikz}
+    }{% Is just NC
+      \input{Axes/YAxis_1.5E-38Norm.tikz}
+    }
+  }
+}
+
 \draw [c,line width=0.9] (19.4,2.34848) -- (19.4,18.2242);
 \draw [c,line width=0.9] (19.1465,2.34848) -- (19.4,2.34848);
 \draw [c,line width=0.9] (19.2733,3.40687) -- (19.4,3.40687);
@@ -289,9 +423,10 @@
 
 %Fluxes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\iftoggle{FluxIsT2KSKOsc}{%
+\iftoggle{FluxIsT2KOnly}{%
   \input{Fluxes/ND280SKOsc.tikz}
 }{%
+  \input{Fluxes/CurrentAccelFluxes.tikz}
 }
 
 %XSecs
@@ -300,12 +435,23 @@
   \iftoggle{IsNEUTFF}{%
   }{% Is NEUT 5.3.6
     \iftoggle{IsAntiNumu}{%
-    }{% Is numu
       \iftoggle{XSecIsJustCC}{%
-      \input{NEUT/xsecs_CC.5.3.6.tikz}
+        \input{NEUT/numubar/xsecs_CC.5.3.6.tikz}
       }{% Is NC or CC+NC
         \iftoggle{XSecIsCCNC}{%
+          \input{NEUT/numubar/xsecs_CCNC.5.3.6.tikz}
         }{% Is just NC
+          \input{NEUT/numubar/xsecs_NC.5.3.6.tikz}
+        }
+      }
+    }{% Is numu
+      \iftoggle{XSecIsJustCC}{%
+        \input{NEUT/numu/xsecs_CC.5.3.6.tikz}
+      }{% Is NC or CC+NC
+        \iftoggle{XSecIsCCNC}{%
+          \input{NEUT/numu/xsecs_CCNC.5.3.6.tikz}
+        }{% Is just NC
+          \input{NEUT/numu/xsecs_NC.5.3.6.tikz}
         }
       }
     }

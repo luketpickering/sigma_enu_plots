@@ -1,0 +1,32 @@
+% NC-Total
+\def\cctYanchor{16.3}
+\draw [anchor=base west] (\legleftTextX,\cctYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{NC-Total};
+\draw [NCTotalLineStyle]  ($ (\legleftX,\cctYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
+
+%NC-DIS
+\def\ccDISYanchor{15.3}
+\draw [anchor=base west] (\legleftTextX,\ccDISYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{NC-N$\pi$+DIS};
+\draw [NCDISLineStyle] ($ (\legleftX,\ccDISYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
+
+
+%NC-RES
+\def\ccsppYanchor{14.3}
+\draw [anchor=base west] (\legleftTextX,\ccsppYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{NC-RES};
+\draw [NCRESLineStyle] ($ (\legleftX,\ccsppYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
+
+\iftoggle{QELCombined}{ %
+%NCEL
+\def\ccqeYanchor{13.3}
+\draw [anchor=base west] (\legleftTextX,\ccqeYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{NCEL};
+\draw [NCELLineStyle] ($ (\legleftX,\ccqeYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
+}{ % if not QELCombined
+%NC1p1h
+\def\ccqeYanchor{13.3}
+\draw [anchor=base west] (\legleftTextX,\ccqeYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{NC-1p1h};
+\draw [NCopohLineStyle] ($ (\legleftX,\ccqeYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
+
+%NC2p2h
+\def\ccqeYanchor{13.3}
+\draw [anchor=base west] (\legrightTextX,\ccqeYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{NC-2p2h (Nieves)};
+\draw [NCtpthLineStyle] ($ (\legrightX,\ccqeYanchor) + 0.25*(0,\legstyleheight) $) -- ++(\legstylewidth,0);
+} %end \iftoggle{QELCombined}

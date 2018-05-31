@@ -1,0 +1,70 @@
+\iftoggle{FluxIsT2KOnly}{%
+  % ND280
+  \def\ndteYanchor{16.3}
+  \draw [anchor=base west] (\legrightTextX,\ndteYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{T2K: ND off-axis};
+  \draw [ND280FluxColor,fill=ND280FluxColor] ($ (\legrightX,\ndteYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+  \draw [ND280FluxColor,line width=0] ($ (\legrightX,\ndteYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+
+  \iftoggle{IsT2KOsc}{%
+    %%SK
+    \def\SKYanchor{14.8}
+    \draw [anchor=base west] (\legrightTextX,\SKYanchor+0.25) node[scale=\legtextscale, color=LegendTextColor, rotate=0, text width=10em]{[1707.01048] B.F. Super-K oscillated};
+    \draw [SKFluxColor,fill=SKFluxColor] ($ (\legrightX,\SKYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+    \draw [SKFluxColor,line width=0] ($ (\legrightX,\SKYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+
+  }{ %ND280 WSB
+    \iftoggle{WSBxTen}{
+      \def\WSBFact{(\times{}10)}
+    }{
+      \def\WSBFact{}
+    }
+    \iftoggle{IsAntiNumu}{%
+        \def\ndteWSBYanchor{15.1}
+        \draw [anchor=base west] (\legrightTextX,\ndteWSBYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{ND FHC $\bar{\nu}_\mu \WSBFact$};
+        \draw [ND280WSBFluxColor,fill=ND280WSBFluxColor] ($ (\legrightX,\ndteWSBYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+        \draw [ND280WSBFluxColor,line width=0] ($ (\legrightX,\ndteWSBYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+    }{%
+        \def\ndteWSBYanchor{15.1}
+        \draw [anchor=base west] (\legrightTextX,\ndteWSBYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{ND RHC $\nu_\mu \WSBFact$};
+        \draw [ND280WSBFluxColor,fill=ND280WSBFluxColor] ($ (\legrightX,\ndteWSBYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+        \draw [ND280WSBFluxColor,line width=0] ($ (\legrightX,\ndteWSBYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+    }
+  }
+}{%
+  % ND280
+  \def\ndteYanchor{16.3}
+  \draw [anchor=base west] (\legrightTextX,\ndteYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{$\textrm{T2K: ND off-axis}$};
+  \draw [ND280FluxColor,fill=ND280FluxColor] ($ (\legrightX,\ndteYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+  \draw [ND280FluxColor,line width=0] ($ (\legrightX,\ndteYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+
+  \iftoggle{IsAntiNumu}{%
+  %no public anti-NOvA yet
+  }{%
+    % NOvA
+    \def\novaYanchor{15.3}
+    \draw [anchor=base west] (\legrightTextX,\novaYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{$\textrm{NO}\nu{}\textrm{A: ND off-axis}$};
+    \draw [NOvAFluxColor,fill=NOvAFluxColor] ($ (\legrightX,\novaYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+    \draw [NOvAFluxColor,line width=0] ($ (\legrightX,\novaYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+  }
+
+  % DUNE
+  \iftoggle{IsAntiNumu}{%
+    \def\duneYanchor{15.3}
+  }{%
+    \def\duneYanchor{14.3}
+  }
+  \draw [anchor=base west] (\legrightTextX,\duneYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{$\textrm{DUNE: Opt.\,\raisebox{0.1em}{\footnotesize[1512.06148]}}$};
+  \draw [DUNEFluxColor,fill=DUNEFluxColor] ($ (\legrightX,\duneYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+  \draw [DUNEFluxColor,line width=0] ($ (\legrightX,\duneYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+
+  % MINERvA ME
+  \iftoggle{IsAntiNumu}{%
+    \def\minervaYanchor{14.3}
+  }{%
+    \def\minervaYanchor{13.3}
+  }
+  \draw [anchor=base west] (\legrightTextX,\minervaYanchor) node[scale=\legtextscale, color=LegendTextColor, rotate=0]{$\textrm{MINER}\nu{}\textrm{A: L.E.}$};
+  \draw [MINERvAFluxColor,fill=MINERvAFluxColor] ($ (\legrightX,\minervaYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+  \draw [MINERvAFluxColor,line width=0] ($ (\legrightX,\minervaYanchor) + (0,\legstyletextyoffset) $) -- ++(\legstylewidth,0) -- ++(0,-\legstyleheight) -- ++(-\legstylewidth,0) -- cycle;
+
+}
