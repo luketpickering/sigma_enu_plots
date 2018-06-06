@@ -24,6 +24,10 @@ cat plot.default.cfg | sed 's:toggletrue{FluxIsT2KOnly}:togglefalse{FluxIsT2KOnl
 pdflatex sigma_enu_plot.master.tex
 mv sigma_enu_plot.master.pdf sigma_enu_NEUT.5.3.6_numubarCC_fluxes.pdf
 
+cat plot.default.cfg | sed 's:togglefalse{IsAntiNumu}:toggletrue{IsAntiNumu}:g' > plot.cfg
+pdflatex sigma_enu_plot.master.tex
+mv sigma_enu_plot.master.pdf sigma_enu_NEUT.5.3.6_numubarCC.pdf
+
 cat plot.default.cfg | sed 's:toggletrue{IsT2KOsc}:togglefalse{IsT2KOsc}:g' > plot.cfg
 pdflatex sigma_enu_plot.master.tex
 mv sigma_enu_plot.master.pdf sigma_enu_NEUT.5.3.6_numuCC_T2KWSB.pdf
@@ -44,3 +48,11 @@ mv sigma_enu_plot.master.pdf sigma_enu_NEUT.5.3.6_numuCC_T2KWSBx10.pdf
 cat plot.default.cfg | sed 's:toggletrue{IsT2KOsc}:togglefalse{IsT2KOsc}:g' | sed 's:togglefalse{IsAntiNumu}:toggletrue{IsAntiNumu}:g' | sed 's:togglefalse{WSBxTen}:toggletrue{WSBxTen}:g' | sed 's:toggletrue{XSecIsTrueMode}:togglefalse{XSecIsTrueMode}:g' > plot.cfg
 pdflatex sigma_enu_plot.master.tex
 mv sigma_enu_plot.master.pdf sigma_enu_NEUT.5.3.6_numubarCC_FSTopology_T2KWSBx10.pdf
+
+cat plot.default.cfg | sed 's:toggletrue{IsT2KOsc}:togglefalse{IsT2KOsc}:g' | sed 's:togglefalse{IsAntiNumu}:toggletrue{IsAntiNumu}:g' | sed 's:togglefalse{WSBxTen}:toggletrue{WSBxTen}:g' | sed 's:toggletrue{XSecIsTrueMode}:togglefalse{XSecIsTrueMode}:g' | sed 's:toggletrue{OnePiCombined}:togglefalse{OnePiCombined}:g' > plot.cfg
+pdflatex sigma_enu_plot.master.tex
+mv sigma_enu_plot.master.pdf sigma_enu_NEUT.5.3.6_numubarCC_FSTopology_1PiSeparate_T2KWSBx10.pdf
+
+cat plot.default.cfg | sed 's:togglefalse{IsNEUTFF}:toggletrue{IsNEUTFF}:g' > plot.cfg
+pdflatex sigma_enu_plot.master.tex
+mv sigma_enu_plot.master.pdf sigma_enu_NEUT.5.4.0_numuCC_ND280SKOsc.pdf

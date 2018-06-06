@@ -433,26 +433,28 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \iftoggle{IsNEUT}{%
   \iftoggle{IsNEUTFF}{%
+  \def\NEUTVER{5.4.0}
   }{% Is NEUT 5.3.6
-    \iftoggle{IsAntiNumu}{%
-      \iftoggle{XSecIsJustCC}{%
-        \input{NEUT/numubar/xsecs_CC.5.3.6.tikz}
-      }{% Is NC or CC+NC
-        \iftoggle{XSecIsCCNC}{%
-          \input{NEUT/numubar/xsecs_CCNC.5.3.6.tikz}
-        }{% Is just NC
-          \input{NEUT/numubar/xsecs_NC.5.3.6.tikz}
-        }
+  \def\NEUTVER{5.3.6}
+  }
+  \iftoggle{IsAntiNumu}{%
+    \iftoggle{XSecIsJustCC}{%
+      \input{NEUT/numubar/xsecs_CC.\NEUTVER.tikz}
+    }{% Is NC or CC+NC
+      \iftoggle{XSecIsCCNC}{%
+        \input{NEUT/numubar/xsecs_CCNC.\NEUTVER.tikz}
+      }{% Is just NC
+        \input{NEUT/numubar/xsecs_NC.\NEUTVER.tikz}
       }
-    }{% Is numu
-      \iftoggle{XSecIsJustCC}{%
-        \input{NEUT/numu/xsecs_CC.5.3.6.tikz}
-      }{% Is NC or CC+NC
-        \iftoggle{XSecIsCCNC}{%
-          \input{NEUT/numu/xsecs_CCNC.5.3.6.tikz}
-        }{% Is just NC
-          \input{NEUT/numu/xsecs_NC.5.3.6.tikz}
-        }
+    }
+  }{% Is numu
+    \iftoggle{XSecIsJustCC}{%
+      \input{NEUT/numu/xsecs_CC.\NEUTVER.tikz}
+    }{% Is NC or CC+NC
+      \iftoggle{XSecIsCCNC}{%
+        \input{NEUT/numu/xsecs_CCNC.\NEUTVER.tikz}
+      }{% Is just NC
+        \input{NEUT/numu/xsecs_NC.\NEUTVER.tikz}
       }
     }
   }
