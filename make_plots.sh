@@ -24,9 +24,9 @@ mv sigma_enu_plot.master.pdf sigma_enu_NEUT.5.3.6_numuCCNC_ND280SKOsc.pdf
 # pdflatex sigma_enu_plot.master.tex
 # mv sigma_enu_plot.master.pdf sigma_enu_NEUT.5.3.6_numubarCC_fluxes.pdf
 #
-# cat plot.default.cfg | sed 's:togglefalse{IsAntiNumu}:toggletrue{IsAntiNumu}:g' > plot.cfg
-# pdflatex sigma_enu_plot.master.tex
-# mv sigma_enu_plot.master.pdf sigma_enu_NEUT.5.3.6_numubarCC.pdf
+cat plot.default.cfg | sed 's:togglefalse{IsAntiNumu}:toggletrue{IsAntiNumu}:g' > plot.cfg
+pdflatex sigma_enu_plot.master.tex
+mv sigma_enu_plot.master.pdf sigma_enu_NEUT.5.3.6_numubarCC.pdf
 #
 # cat plot.default.cfg | sed 's:toggletrue{IsT2KOsc}:togglefalse{IsT2KOsc}:g' > plot.cfg
 # pdflatex sigma_enu_plot.master.tex

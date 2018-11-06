@@ -319,7 +319,7 @@
   }
   \iftoggle{IsAntiNumu}{%
     \iftoggle{XSecIsJustCC}{%
-      % \input{NEUT/numubar/xsecs_CC.\NEUTVER.tikz}
+      \input{NEUT/numubar/xsecs_CC.\NEUTVER.tikz}
     }{% Is NC or CC+NC
       \iftoggle{XSecIsCCNC}{%
         % \input{NEUT/numubar/xsecs_CCNC.\NEUTVER.tikz}
@@ -350,16 +350,16 @@
   }
 }
 
-%XSecs
+%Axes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \iftoggle{IsAntiNumu}{
   \iftoggle{XSecIsJustCC}{%
-    % \input{Axes/YAxis_1.5E-38Norm.tikz}
+    \input{Axes/YAxis_1E-38Norm.tikz}
   }{% Is NC or CC+NC
     \iftoggle{XSecIsCCNC}{%
-      % \input{Axes/YAxis_1.5E-38Norm.tikz}
+      % \input{Axes/YAxis_1E-38Norm.tikz}
     }{% Is just NC
-      % \input{Axes/YAxis_1.5E-38Norm.tikz}
+      % \input{Axes/YAxis_0.5E-38Norm.tikz}
     }
   }
 }{
